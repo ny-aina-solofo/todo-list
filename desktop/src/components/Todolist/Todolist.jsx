@@ -2,9 +2,11 @@ import React,{ useContext, useEffect, useState} from "react"
 import { TodoItem } from "../TodoItem/TodoItem";
 import { useTodo ,useTodoDispatch } from "../../context/context";
 import todolistService from "../../services/todolist/todolist.service";
+import { data } from "./data";
 
 export default function Todolist() {
-    const todolist = useTodo();
+    // const todolist = useTodo();
+    const todolist = data;
     const dispatch = useTodoDispatch();
     const [draggedTodo, setdraggedTodo] = useState(null);
 
