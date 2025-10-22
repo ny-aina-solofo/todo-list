@@ -1,24 +1,26 @@
-import React,{ useContext, useEffect, useState} from "react"
+import React,{ ReactEventHandler, useContext, useEffect, useState} from "react"
 import { TodoItem } from "../TodoItem/TodoItem";
 import { useTodo ,useTodoDispatch } from "../../context/context";
-
+import { TodolistType } from "@/types/todolist";
 
 export default function Todolist() {
-    const todolist = useTodo();
+    const { filteredTodos } = useTodo(); 
     const dispatch = useTodoDispatch();
-    const [draggedTodo, setdraggedTodo] = useState(null);
+    const [draggedTodo, setdraggedTodo] = useState<number | null>(null);
+        			
 
-    const dragStart = (index:any)=>{
+    const dragStart = (index:number)=>{
         setdraggedTodo(index);
     }
-    const dragOver = (e:any)=>{
+    const dragOver = (e: React.DragEvent<HTMLLIElement>)=>{
         e.preventDefault(); 
     }
-    const drop = (index:any)=>{
-        const reorderedList = [...todolist];
+    const drop = (index:number)=>{
+        if (draggedTodo === null) return;
+        const reorderedList = [...filteredTodos];
         const [draggedItem] = reorderedList.splice(draggedTodo,1); 
         reorderedList.splice(index,0,draggedItem);
-        const updatedList = reorderedList.map((todo,order)=>({...todo, rang : order.toString()}));
+        const updatedList = reorderedList.map((todo:TodolistType,order:number)=>({...todo, rang : order.toString()}));
         dispatch({ type : 'drag_and_drop', updatedList : updatedList});
         setdraggedTodo(null);
         // todolistService.updateTodoListOrder(updatedList).then((response)=>{});
@@ -26,11 +28,11 @@ export default function Todolist() {
 
     return (
         <div className="bg-white rounded-t-md dark:bg-Dark-Very-Dark-Desaturated-Blue shadow-2xl">            
-            {todolist.length > 0 ? (
+            {filteredTodos.length > 0 ? (
                 <div>
-                    {todolist.map( (todo,index) =>
+                    {filteredTodos.map( (todo,index) =>
                         <li 
-                            key={todo._id} draggable  
+                            key={todo.id} draggable  
                             onDragStart={()=>dragStart(index)}
                             onDragOver={dragOver}
                             onDrop={()=>drop(index)}

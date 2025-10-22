@@ -1,14 +1,15 @@
 import React, { useState } from "react"
 import { useTodoDispatch } from "../../context/context";
+import { TodolistType } from "@/types/todolist";
 
-type TodoProps = {
-    todo : any;
+interface TodoProps {
+    todo : TodolistType;
 };
 
 export default function Checkbox({todo}:TodoProps) { 
     const dispatch = useTodoDispatch();
 
-    const updateCheckbox = (id:any)=>{
+    const updateCheckbox = (id:number)=>{
         dispatch({ type: 'update_checkbox', id : id });
         const done = !todo.done;
         // todolistService.updateCheckbox(id,done).then((response)=>{});
@@ -21,8 +22,8 @@ export default function Checkbox({todo}:TodoProps) {
         >
             <input
                 type="checkbox"
-                checked={todo.done}
-                onChange={() => updateCheckbox(todo._id)}
+                // checked={todo.done}
+                onChange={() => updateCheckbox(todo.id)}
                 className={`
                     w-4 h-4 box-content appearance-none outline-none 
                     ${todo.done ? "border-none" : "border-2"}

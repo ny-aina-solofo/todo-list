@@ -2,14 +2,16 @@ import React from "react";
 import { useTodoDispatch } from "../../context/context";
 import Checkbox from "../Checkbox/Checkbox";
 import iconCross from '../../assets/icon-cross.svg';
+import { TodolistType } from "@/types/todolist";
 
-type TodoProps = {
-    todo : any;
+interface TodoProps  {
+    todo : TodolistType;
 };
 
 export const TodoItem = ({todo}:TodoProps) => {
     const dispatch = useTodoDispatch();
-    const deleteTodoList = (id:any)=>{
+    
+    const deleteTodoList = (id:number)=>{
         dispatch({ type: 'delete_item', id : id });
         // todolistService.deleteTodoList(id).then((response)=>{});
     }
@@ -42,7 +44,7 @@ export const TodoItem = ({todo}:TodoProps) => {
                     ml-4 w-[14px] sm:w-[18px] h-[14px] sm:h-[18px] sm:invisible 
                     sm:group-hover:visible cursor-pointer
                 "
-				onClick={()=>deleteTodoList(todo._id)}
+				onClick={()=>deleteTodoList(todo.id)}
             />
         </div>
     )

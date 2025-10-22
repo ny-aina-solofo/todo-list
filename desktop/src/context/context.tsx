@@ -1,22 +1,26 @@
 import React, { useEffect, createContext, useContext, useReducer,Dispatch } from 'react';
-import todolistService from "../services/todolist/todolist.service";
 import { todoReducer, TodoAction } from './reducer';
 
 export const TodoContext = createContext<{allTodos:any[], filteredTodos: any[];} | undefined>(undefined);;
 export const TodoDispatchContext = createContext<Dispatch<TodoAction> | undefined>(undefined);
 
-export const TodoContextProvider = ({ children }) => {
+export const TodoContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [state, dispatch] = useReducer(todoReducer,{
 		allTodos: [],
 		filteredTodos: []
 	});
 	useEffect(() => {
-		todolistService.getTodoList().then(response => {
-			dispatch({ type: 'set_data', data: response?.data || [] });
-        });
+		(async () => {
+			try {
+				const todos = await window.electronAPI.getTodoList();
+				dispatch({ type: 'set_data', data: todos });
+			} catch (err) {
+				console.error('Erreur chargement todos:', err);
+			}
+		})();
     }, []);
 	return(
-		<TodoContext.Provider value={ state.filteredTodos }>
+		<TodoContext.Provider value={ state }>
 			<TodoDispatchContext.Provider value={ dispatch }>
 				{children}
 			</TodoDispatchContext.Provider>

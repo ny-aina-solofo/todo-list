@@ -3,8 +3,8 @@ import { useTodo,useTodoDispatch } from "../../context/context";
 
 export const Filter = () => {
     const dispatch = useTodoDispatch();
-    const todolist = useTodo();
-    const count = todolist.length;
+    const { filteredTodos } = useTodo(); 
+    const count = filteredTodos.length;
     const handleClear = () =>{
         dispatch({ type: 'clear_completed_items'});
     }

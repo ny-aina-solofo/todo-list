@@ -28,7 +28,7 @@ export const DarkModeToggle = () => {
     };
     return (
         <div>
-            <div className='cursor-pointer' type="button" onClick={handleDarkMode}>
+            <div className='cursor-pointer'  onClick={handleDarkMode}>
                 {
                     isDarkMode ? 
                     (
