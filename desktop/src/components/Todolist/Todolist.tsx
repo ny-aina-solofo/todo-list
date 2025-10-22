@@ -1,29 +1,27 @@
 import React,{ useContext, useEffect, useState} from "react"
 import { TodoItem } from "../TodoItem/TodoItem";
 import { useTodo ,useTodoDispatch } from "../../context/context";
-import todolistService from "../../services/todolist/todolist.service";
-import { data } from "./data";
+
 
 export default function Todolist() {
-    // const todolist = useTodo();
-    const todolist = data;
+    const todolist = useTodo();
     const dispatch = useTodoDispatch();
     const [draggedTodo, setdraggedTodo] = useState(null);
 
-    const dragStart = (index)=>{
+    const dragStart = (index:any)=>{
         setdraggedTodo(index);
     }
-    const dragOver = (e)=>{
+    const dragOver = (e:any)=>{
         e.preventDefault(); 
     }
-    const drop = (index)=>{
+    const drop = (index:any)=>{
         const reorderedList = [...todolist];
         const [draggedItem] = reorderedList.splice(draggedTodo,1); 
         reorderedList.splice(index,0,draggedItem);
         const updatedList = reorderedList.map((todo,order)=>({...todo, rang : order.toString()}));
         dispatch({ type : 'drag_and_drop', updatedList : updatedList});
         setdraggedTodo(null);
-        todolistService.updateTodoListOrder(updatedList).then((response)=>{});
+        // todolistService.updateTodoListOrder(updatedList).then((response)=>{});
     }
 
     return (

@@ -1,14 +1,17 @@
 import React from "react";
 import { useTodoDispatch } from "../../context/context";
-import todolistService from "../../services/todolist/todolist.service";
 import Checkbox from "../Checkbox/Checkbox";
 import iconCross from '../../assets/icon-cross.svg';
 
-export const TodoItem = ({todo}) => {
+type TodoProps = {
+    todo : any;
+};
+
+export const TodoItem = ({todo}:TodoProps) => {
     const dispatch = useTodoDispatch();
-    const deleteTodoList = (id)=>{
+    const deleteTodoList = (id:any)=>{
         dispatch({ type: 'delete_item', id : id });
-        todolistService.deleteTodoList(id).then((response)=>{});
+        // todolistService.deleteTodoList(id).then((response)=>{});
     }
     return (
         <div 

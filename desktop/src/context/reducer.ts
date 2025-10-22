@@ -1,4 +1,18 @@
-export const todoReducer = (state, action) => {
+export interface TodoState {
+    allTodos: any[];
+    filteredTodos: any[];
+}
+export type TodoAction =
+    | { type: "set_data"; data: any[] }
+    | { type: "delete_item"; id: number }
+    | { type: "update_checkbox"; id: string }
+    | { type: "display_all_items"}
+    | { type: "display_active_items"}  
+    | { type: "display_completed_items"}  
+    | { type: "clear_completed_items"}  
+    | { type: "drag_and_drop",updatedList:any}  
+
+export const todoReducer = (state : TodoState , action : TodoAction) => {
     switch (action.type) {
         case 'set_data': // Initialisation avec les données récupérées
             return { 
@@ -51,6 +65,6 @@ export const todoReducer = (state, action) => {
                 filteredTodos: action.updatedList 
             };
         default:
-            throw Error('Unknown action: ' + action.type);
+            throw Error('Unknown action: ' + action);
     }
 };

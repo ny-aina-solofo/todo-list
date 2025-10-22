@@ -1,14 +1,17 @@
 import React, { useState } from "react"
-import todolistService from "../../services/todolist/todolist.service";
 import { useTodoDispatch } from "../../context/context";
 
-export default function Checkbox({todo}) { 
+type TodoProps = {
+    todo : any;
+};
+
+export default function Checkbox({todo}:TodoProps) { 
     const dispatch = useTodoDispatch();
 
-    const updateCheckbox = (id)=>{
+    const updateCheckbox = (id:any)=>{
         dispatch({ type: 'update_checkbox', id : id });
         const done = !todo.done;
-        todolistService.updateCheckbox(id,done).then((response)=>{});
+        // todolistService.updateCheckbox(id,done).then((response)=>{});
     }
     return(
         <div
