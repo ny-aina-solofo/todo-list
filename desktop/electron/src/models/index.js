@@ -1,7 +1,22 @@
+const fs = require('node:fs');
+const { app } = require('electron');
 const Sequelize = require('sequelize');  
 const path = require('node:path');
 
-const dbPath = path.resolve(__dirname, 'todolist.db');
+// const dbPath = path.resolve(__dirname, '../db/todolist.db');
+const userDataPath = app.getPath('userData');
+const dbPath = path.join(userDataPath, 'todolist.db');
+const initialDbPath = path.join(__dirname, '../db/todolist.db');
+
+if (!fs.existsSync(dbPath)) {
+  // Le fichier n'existe pas dans le répertoire de données, copiez la version initiale
+  try {
+    fs.copyFileSync(initialDbPath, dbPath);
+    console.log('Base de données initiale copiée.');
+  } catch (err) {
+    console.error('Erreur lors de la copie de la base de données initiale:', err);
+  }
+}
 
 const sequelize = new Sequelize({
   host: 'localhost',

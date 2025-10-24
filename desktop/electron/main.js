@@ -5,19 +5,20 @@ const { getTodolist, addTodo, deleteTodo, updateDone, updateOrder } = require('.
 
 Menu.setApplicationMenu(null);
 
-
 const createWindow = () => {
   const win = new BrowserWindow({
+    title:'Todolist',
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    icon: path.join(__dirname, 'assets/todo-app')
+    // icon: path.join(__dirname, './moon.png'),
   });
-  win.loadURL('http://localhost:5173'); 
-  // win.webContents.openDevTools();
-  // win.loadFile('index.html')
+
+  // win.loadURL('http://localhost:5173'); 
+  // win.webContents.openDevTools(); 
+  win.loadFile(path.join(__dirname, './dist/index.html'))
 }
 
 app.whenReady().then(() => {

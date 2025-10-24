@@ -4,6 +4,10 @@ const path = require('node:path');
 
 module.exports = {
   packagerConfig: {
+    name: 'todolist',             
+    executableName: 'todolist', 
+    // icon: './moon.png',
+    overwrite: true,
     asar: true,
   },
   rebuildConfig: {},
@@ -20,7 +24,8 @@ module.exports = {
       name: '@electron-forge/maker-deb',
       config: {
         options: {
-          icon: path.join(__dirname, 'assets/todo-app')
+          // icon: './moon.png',
+          maintainer: 'Ny Aina Solofo <email@example.com>',
         }
       },
     },
