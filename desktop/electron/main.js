@@ -1,9 +1,7 @@
-import { app, BrowserWindow,Menu,ipcMain } from 'electron'
-import { fileURLToPath } from 'node:url'
-import path from 'node:path'
-import { initDatabase } from '../db/index.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const { app, BrowserWindow,Menu,ipcMain } = require('electron/main');
+const path = require('node:path');
+const {sequelize} = require('./src/models/index');
+const { getTodolist, addTodo, deleteTodo, updateDone, updateOrder } = require('./src/controllers/todolist_controller');
 
 Menu.setApplicationMenu(null);
 
@@ -13,40 +11,23 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.cjs'),
-      contextIsolation: true,
-      nodeIntegration: false,
-    }
-  })
+      preload: path.join(__dirname, 'preload.js')
+    },
+    icon: path.join(__dirname, 'assets/todo-app')
+  });
   win.loadURL('http://localhost:5173'); 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   // win.loadFile('index.html')
 }
 
-app.whenReady().then(async() => {
-  const db = await initDatabase();
-  ipcMain.handle('get-todolist',async() => {
-    const todos = await db.todolist.findAll();
-    return todos.map((t) => t.toJSON())
-  });
-  
-  ipcMain.handle('add-todo', async (_event, todo) => {
-    await db.todolist.create(todo);
-    return { success: true };
-  });
+app.whenReady().then(() => {
+  ipcMain.handle('get-todolist',getTodolist);
+  ipcMain.handle('add-todo',async (_event, newLibelle) => await addTodo(newLibelle));
+  ipcMain.handle('delete-todo',async (_event, id) => await deleteTodo(id));
+  ipcMain.handle('update-done', async (_event, id, newDone) => await updateDone(id,newDone));
+  ipcMain.handle('update-order', async (_event, updatedList) => await updateOrder(updatedList));
 
-  ipcMain.handle('update-todo', async (_event, id, updates) => {
-    await db.todolist.update(updates, { where: { id } });
-    const updated = await db.todolist.findByPk(id);
-    return updated?.toJSON();
-  });
-
-  ipcMain.handle('delete-todo', async (_event, id) => {
-    await db.todolist.destroy({ where: { id } });
-    return { success: true };
-  });
-  
-  createWindow();
+  createWindow()
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -55,8 +36,14 @@ app.whenReady().then(async() => {
   })
 })
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async() => {
   if (process.platform !== 'darwin') {
+    try {
+      await sequelize.close();
+      console.log('Connection has been closed successfully.');
+    } catch (error) {
+      console.error('Unable to close to the database:', error);
+    }
     app.quit()
   }
 })
