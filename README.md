@@ -43,33 +43,26 @@ Users should be able to:
 
 &nbsp;
 ### Links
-link : https://todolist-client-b2om.onrender.com  
-github : https://github.com/ny-aina-solofo/todolist
+link :   
+github : https://github.com/ny-aina-solofo/todo-list
 
 &nbsp;
 ## My process
 ### Built with
-**Front** : react, tailwind  
-**Back** : node, express, mongodb  
-**CI / CD** : github actions  
-**Host**: github, render  
-**Environment** : dotenv  
+**Front** : react, electron, tailwind  
+**Back** : node, sqlite, locale storage  
+**Host**: github, vercel  
 **Test** : vitest, jest, react-testing-library  
-**Container**: docker  
 &nbsp;
 ### What I learned
 - React
 - Tailwind
-- MongoDB
-- Docker
 - Testing : unit testing, integration testing
 - Hosting
-- CI / CD
 &nbsp;
 ### Continued development
 - clean coding
 - clean architectures
-- containerization
 &nbsp;
 ### Useful resources
 - react : https://fr.react.dev/

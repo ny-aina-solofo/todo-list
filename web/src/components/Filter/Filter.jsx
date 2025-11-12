@@ -1,11 +1,13 @@
 import React, { useState,useEffect } from "react"
 import { useTodo,useTodoDispatch } from "../../context/context";
+import todolistService from "../../services/todolist.service";
 
 export const Filter = () => {
     const dispatch = useTodoDispatch();
     const todolist = useTodo();
     const count = todolist.length;
     const handleClear = () =>{
+        todolistService.clearCompleted();
         dispatch({ type: 'clear_completed_items'});
     }
     const filterAll = () =>{
@@ -25,7 +27,7 @@ export const Filter = () => {
                     px-5 sm:px-6 py-4 sm:py-5 border-Light-Grayish-Blue 
                     text-Light-Dark-Grayish-Blue bg-white dark:bg-Dark-Very-Dark-Desaturated-Blue 
                     dark:border-Dark-Very-Dark-Grayish-Blue   
-                    dark:text-Dark-Very-Dark-Grayish-Blue
+                    dark:text-Dark-Light-Grayish-Blue
                 "
             >
                 <span className='max-w-[100px] w-ful'>{count} item{count > 1 ? 's' : ''}</span>

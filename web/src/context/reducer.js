@@ -5,9 +5,14 @@ export const todoReducer = (state, action) => {
                 allTodos: action.data, 
                 filteredTodos: action.data 
             };
-
+        case "add_item":
+            return {
+                ...state,
+                allTodos: [...state.allTodos, action.newTodo],
+                filteredTodos: [...state.filteredTodos, action.newTodo]
+            };
         case 'delete_item':
-            const deleteItems = state.allTodos.filter(todo => todo._id !== action.id);
+            const deleteItems = state.allTodos.filter(todo => todo.id !== action.id);
             return { 
                 allTodos: deleteItems, 
                 filteredTodos: deleteItems 
@@ -15,7 +20,7 @@ export const todoReducer = (state, action) => {
 
         case 'update_checkbox':
             const updateCheckbox = state.allTodos.map(todo => 
-                todo._id !== action.id ? todo : { ...todo, done: !todo.done }
+                todo.id !== action.id ? todo : { ...todo, done: !todo.done }
             );
             return { 
                 allTodos: updateCheckbox, 

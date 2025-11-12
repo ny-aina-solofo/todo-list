@@ -1,7 +1,7 @@
 import React,{ useContext, useEffect, useState} from "react"
 import { TodoItem } from "../TodoItem/TodoItem";
 import { useTodo ,useTodoDispatch } from "../../context/context";
-import todolistService from "../../services/todolist/todolist.service";
+import todolistService from "../../services/todolist.service";
 
 export default function Todolist() {
     const todolist = useTodo();
@@ -21,7 +21,7 @@ export default function Todolist() {
         const updatedList = reorderedList.map((todo,order)=>({...todo, rang : order.toString()}));
         dispatch({ type : 'drag_and_drop', updatedList : updatedList});
         setdraggedTodo(null);
-        todolistService.updateTodoListOrder(updatedList).then((response)=>{});
+        todolistService.updateTodoListOrder(updatedList)
     }
 
     return (
@@ -30,7 +30,7 @@ export default function Todolist() {
                 <div>
                     {todolist.map( (todo,index) =>
                         <li 
-                            key={todo._id} draggable  
+                            key={todo.id} draggable  
                             onDragStart={()=>dragStart(index)}
                             onDragOver={dragOver}
                             onDrop={()=>drop(index)}

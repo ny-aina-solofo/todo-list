@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useContext, useReducer } from 'react';
-import todolistService from "../services/todolist/todolist.service";
+import todolistService from "../services/todolist.service";
 import { todoReducer } from './reducer';
 
 export const TodoContext = createContext(null);
@@ -10,11 +10,10 @@ export const TodoContextProvider = ({ children }) => {
 		allTodos: [],
 		filteredTodos: []
 	});
-	useEffect(() => {
-		todolistService.getTodoList().then(response => {
-			dispatch({ type: 'set_data', data: response?.data || [] });
-        });
-    }, []);
+ 	useEffect(() => {
+        const todos = todolistService.getTodoList();
+        dispatch({ type: 'set_data', data: todos });
+    }, []);	
 	return(
 		<TodoContext.Provider value={ state.filteredTodos }>
 			<TodoDispatchContext.Provider value={ dispatch }>

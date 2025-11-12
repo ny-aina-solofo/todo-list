@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import todolistService from "../../services/todolist/todolist.service";
+import todolistService from "../../services/todolist.service";
 import { useTodoDispatch } from "../../context/context";
 
 export default function Checkbox({todo}) { 
@@ -8,7 +8,7 @@ export default function Checkbox({todo}) {
     const updateCheckbox = (id)=>{
         dispatch({ type: 'update_checkbox', id : id });
         const done = !todo.done;
-        todolistService.updateCheckbox(id,done).then((response)=>{});
+        todolistService.updateCheckbox(id,done)
     }
     return(
         <div
@@ -19,7 +19,7 @@ export default function Checkbox({todo}) {
             <input
                 type="checkbox"
                 checked={todo.done}
-                onChange={() => updateCheckbox(todo._id)}
+                onChange={() => updateCheckbox(todo.id)}
                 className={`
                     w-4 h-4 box-content appearance-none outline-none 
                     ${todo.done ? "border-none" : "border-2"}

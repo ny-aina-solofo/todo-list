@@ -5,7 +5,7 @@ export const Footer = () => {
         <footer>
             <p 
                 className="text-sm mt-10 sm:mt-14 text-center text-Light-Dark-Grayish-Blue 
-                dark:text-Dark-Very-Dark-Grayish-Blue"
+                dark:text-Dark-Light-Grayish-Blue"
             >
                 Drag and drop to reorder list
             </p>

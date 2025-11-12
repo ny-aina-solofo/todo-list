@@ -25,7 +25,7 @@ export const Filter = () => {
                     px-5 sm:px-6 py-4 sm:py-5 border-Light-Grayish-Blue 
                     text-Light-Dark-Grayish-Blue bg-white dark:bg-Dark-Very-Dark-Desaturated-Blue 
                     dark:border-Dark-Very-Dark-Grayish-Blue   
-                    dark:text-Dark-Very-Dark-Grayish-Blue
+                    dark:text-Dark-Light-Grayish-Blue
                 "
             >
                 <span className='max-w-[100px] w-ful'>{count} item{count > 1 ? 's' : ''}</span>

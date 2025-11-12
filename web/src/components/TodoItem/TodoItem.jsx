@@ -1,6 +1,6 @@
 import React from "react";
 import { useTodoDispatch } from "../../context/context";
-import todolistService from "../../services/todolist/todolist.service";
+import todolistService from "../../services/todolist.service";
 import Checkbox from "../Checkbox/Checkbox";
 import iconCross from '../../assets/icon-cross.svg';
 
@@ -8,7 +8,7 @@ export const TodoItem = ({todo}) => {
     const dispatch = useTodoDispatch();
     const deleteTodoList = (id)=>{
         dispatch({ type: 'delete_item', id : id });
-        todolistService.deleteTodoList(id).then((response)=>{});
+        todolistService.deleteTodoList(id)
     }
     return (
         <div 
@@ -39,7 +39,7 @@ export const TodoItem = ({todo}) => {
                     ml-4 w-[14px] sm:w-[18px] h-[14px] sm:h-[18px] sm:invisible 
                     sm:group-hover:visible cursor-pointer
                 "
-				onClick={()=>deleteTodoList(todo._id)}
+				onClick={()=>deleteTodoList(todo.id)}
             />
         </div>
     )

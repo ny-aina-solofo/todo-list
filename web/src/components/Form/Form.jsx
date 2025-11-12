@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useTodoDispatch } from "../../context/context";
-import todolistService from "../../services/todolist/todolist.service";
+import todolistService from "../../services/todolist.service";
 
 export default function Form() {
     const [inputValue,setInputValue] = useState('');
@@ -8,12 +8,8 @@ export default function Form() {
     
     const addTodoList = ()=>{
         if (!inputValue) return;
-        // dispatch({ type: 'add_item', libelle : inputValue });
-        todolistService.insertTodoList(inputValue).then((response)=>{
-            todolistService.getTodoList().then((response)=>{
-                dispatch({ type: 'set_data', data: response?.data || [] });
-            });
-        });
+        const newTodo = todolistService.insertTodoList(inputValue);
+        dispatch({ type: "add_item", newTodo });
         setInputValue('');
     } 
     return(
@@ -43,7 +39,7 @@ export default function Form() {
             </div>
             <button 
                 className="
-                    text-Light-Very-Dark-Grayish-Blue cursor-pointer 
+                    text-Light-Very-Dark-Grayish-Blue cursor-pointer font-bold 
                     p-2 rounded-md mr-4 border-2 border-Light-Light-Grayish-Blue
                     hover:bg-Light-Light-Grayish-Blue
                     dark:text-Dark-Light-Grayish-Blue
@@ -52,7 +48,7 @@ export default function Form() {
                 " 
                 onClick={addTodoList}
             >
-                Add
+                + New
             </button>
         </div>
     )
