@@ -25,7 +25,7 @@ module.exports = {
       config: {
         options: {
           // icon: './moon.png',
-          maintainer: 'Ny Aina Solofo <email@example.com>',
+          maintainer: 'ny-aina-solofo',
         }
       },
     },
