@@ -30,10 +30,7 @@ Users should be able to:
 - [x] View the optimal layout for the app depending on their device's screen size
 - [x] See hover states for all interactive elements on the page
 - [x] Build this project as a full-stack application
-- [ ] clean code
-- [ ] clean architectures
 - [x] test
-- [ ] containerization
 - [x] **Bonus**: Drag and drop to reorder items on the list
   &nbsp;
 ### Screenshot
@@ -43,7 +40,7 @@ Users should be able to:
 
 &nbsp;
 ### Links
-link :   
+link : https://todolist-gray-theta-28.vercel.app/   
 github : https://github.com/ny-aina-solofo/todo-list
 
 &nbsp;
