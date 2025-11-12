@@ -6,8 +6,14 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(),
-    
+    tailwindcss(),    
   ],
+  build: {
+    minify: 'esbuild',
+    cssMinify: true,
+    sourcemap: false,
+    outDir: 'dist',
+  },
   base: './',
+
 })

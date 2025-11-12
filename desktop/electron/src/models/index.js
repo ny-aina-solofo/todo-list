@@ -4,10 +4,10 @@ const Sequelize = require('sequelize');
 const path = require('node:path');
 
 // const dbPath = path.resolve(__dirname, '../db/todolist.db');
-const userDataPath = app.getPath('userData');
-const dbPath = path.join(userDataPath, 'todolist.db');
+// const userDataPath = app.getPath('userData');
+// const dbPath = path.join(userDataPath, 'todolist.db');
 const initialDbPath = path.join(__dirname, '../db/todolist.db');
-
+/*
 if (!fs.existsSync(dbPath)) {
   // Le fichier n'existe pas dans le répertoire de données, copiez la version initiale
   try {
@@ -17,12 +17,12 @@ if (!fs.existsSync(dbPath)) {
     console.error('Erreur lors de la copie de la base de données initiale:', err);
   }
 }
-
+*/
 const sequelize = new Sequelize({
   host: 'localhost',
   dialect: 'sqlite',
   logging: console.log,
-  storage: dbPath,
+  storage: initialDbPath,
 });
 
 sequelize.authenticate()
